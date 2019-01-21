@@ -10,3 +10,7 @@ deploy:
   username: alubbock
   password:
     secure: NpKpyHl0CSQ3NDXJwNEtlRVeOo77kz6LrJBuvsYKC+dIp+geI6o5OtpT94m0iN0pLOFqi+Aji17GxMvB8PSZ0oMKLmkRwMp0QaGXLvxmHWk/IBDjWa8Y9RJ97eAlIZMW5GkxcG9Os+2R0E9eVYvBZYDvl+euq3/HZ27AzZZOkP5msBL2nDSFfnN5tvqh+4L8nyyDTq5A4arDpcE04Wjsp2q6q+x46vzNRO3rY4VTOvgEXjFKrB4/jdcTV6JDW7n25yTVi+WvaEdUKvOLRNJFbk2Apa7RdXr74A3UJ6JXAcFrtxcMUPQGFx7UpiUMXrDyXtMnAJLwDbSCgTlr2IB6lbNtqCLNdde8E9RXPPUDp2JBxx1D0NMEh3WGN8wzpL66uw1HDb78CR668XDnlq2GxloTgUpMVwZDVeeuf9hf772CK7Dz3JX6MzplzU8Nht5qOnfMA4OFWossoucnXANMPnJCH/LLvVvEuXNikwjqp4Il/h93CRo/uanzHiegZYMKabnLwrghQKla9q1ykK55yerGgJZPAu3g8fEyr81jWujLDrFeGWSKREnFda+fTw7T+7sJGhWmfyH1qqopXvmifg0JgRZ/1Ad5N9gUwTrrGADxkwxrS73iPMztFJtmDmCWbf+AWBZFHx+JFrUFHgLkW8953lfENRiAed9vGnXyeS4=
+  on:
+    branches:
+      only:
+      - master
