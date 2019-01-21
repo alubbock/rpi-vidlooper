@@ -36,7 +36,7 @@ sudo apt-get install python3-pip omxplayer
 Install rpi_vidlooper:
 
 ```
-pip3 install rpi-vidlooper
+pip3 install rpi_vidlooper
 ```
 
 This creates the `vidlooper` command. For usage help, see:
