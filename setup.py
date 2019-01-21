@@ -16,6 +16,7 @@ def main():
         author='Alex Lubbock',
         author_email='code@alexlubbock.com',
         packages=['rpi_vidlooper'],
+        install_requires=['RPi.GPIO'],
         cmdclass=versioneer.get_cmdclass(),
         zip_safe=True,
         entry_points = {

@@ -1,4 +1,4 @@
-# rpi_vidlooper
+# rpi-vidlooper
 
 A video looper for the Raspberry Pi, controlled by GPIO pins. Designed to
 run an unattended video display, where users can select the active video
@@ -33,10 +33,10 @@ sudo apt-get update
 sudo apt-get install python3-pip omxplayer
 ```
 
-Install rpi_vidlooper:
+Install rpi-vidlooper:
 
 ```
-pip3 install rpi_vidlooper
+pip3 install rpi-vidlooper
 ```
 
 This creates the `vidlooper` command. For usage help, see:
