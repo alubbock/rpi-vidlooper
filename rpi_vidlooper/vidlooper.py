@@ -45,7 +45,7 @@ class _GpioParser(argparse.Action):
         setattr(namespace, self.dest, gpio_dict)
 
 
-class VidPlayer(object):
+class VidLooper(object):
     _GPIO_BOUNCE_TIME = 200
     _VIDEO_EXTS = ('.mp4', '.m4v', '.mov', '.avi', '.mkv')
     _GPIO_PIN_DEFAULT = {
@@ -211,7 +211,7 @@ Raspberry Pi, which must be installed separately.
              'at a time at the end of the command.')
     vidmode.add_argument('videos', action="store", nargs='*', default=(),
                          help='List of video paths (local, rtsp:// or rtmp://)')
-    parser.add_argument('--gpio-pins', default=VidPlayer._GPIO_PIN_DEFAULT,
+    parser.add_argument('--gpio-pins', default=VidLooper._GPIO_PIN_DEFAULT,
                         action=_GpioParser,
                         help='List of GPIO pins. Either INPUT:OUTPUT pairs, or '
                              'just INPUT pins (no output), separated by '
@@ -222,7 +222,7 @@ Raspberry Pi, which must be installed separately.
 
     # Invoke the videoplayer
     args = parser.parse_args()
-    VidPlayer(**vars(args)).start()
+    VidLooper(**vars(args)).start()
 
 
 if __name__ == '__main__':
