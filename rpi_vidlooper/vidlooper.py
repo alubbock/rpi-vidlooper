@@ -219,9 +219,25 @@ Raspberry Pi, which must be installed separately.
     parser.add_argument('--debug', action='store_true', default=False,
                         help='Debug mode (don\'t clear screen or suppress '
                              'terminal output.')
+    parser.add_argument('--countdown', type=int, default=0,
+                        help='Add a countdown before start (time in seconds)')
 
     # Invoke the videoplayer
     args = parser.parse_args()
+
+    # Apply any countdown
+    countdown = args.countdown
+
+    while countdown > 0:
+        sys.stdout.write(
+            '\rrpi-vidlooper starting in {} seconds '
+            '(Ctrl-C to abort)...'.format(countdown))
+        sys.stdout.flush()
+        time.sleep(1)
+        countdown -= 1
+
+    del args.countdown
+
     VidLooper(**vars(args)).start()
 
 
