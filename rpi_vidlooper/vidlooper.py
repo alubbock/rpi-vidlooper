@@ -67,7 +67,7 @@ class VidLooper(object):
 
     def __init__(self, audio='hdmi', autostart=True, restart_on_press=False,
                  video_dir=os.getcwd(), videos=None, gpio_pins=None, loop=True,
-                 debug=False):
+                 splash=None, debug=False):
         # Use default GPIO pins, if needed
         if gpio_pins is None:
             gpio_pins = self._GPIO_PIN_DEFAULT.copy()
@@ -93,6 +93,8 @@ class VidLooper(object):
         self.autostart = autostart
         self.restart_on_press = restart_on_press
         self.loop = loop
+        self.splash = splash
+        self._splashproc = None
 
     def _kill_process(self):
         """ Kill a video player process. SIGINT seems to work best. """
@@ -148,8 +150,12 @@ class VidLooper(object):
                 GPIO.output(out_pin, GPIO.LOW)
 
         if self.autostart:
-            # Start playing first video
-            self.switch_vid(self.in_pins[0])
+            if self.splash is not None:
+                self._splashproc = Popen(['fbi', '--noverbose', '-a',
+                                          self.splash])
+            else:
+                # Start playing first video
+                self.switch_vid(self.in_pins[0])
 
         # Enable event detection on each input pin
         for pin in self.in_pins:
@@ -159,7 +165,21 @@ class VidLooper(object):
         # Loop forever
         try:
             while True:
-                time.sleep(1.0)
+                time.sleep(0.5)
+                if not self.loop:
+                    pid = -1
+                    if self._p:
+                        pid = self._p.pid
+                        self._p.communicate()
+                    if self._p:
+                        if self._p.pid == pid:
+                            # Reset LEDs
+                            for out_pin in self.gpio_pins.values():
+                                if out_pin is not None:
+                                    GPIO.output(out_pin, GPIO.LOW)
+                            self._active_vid = None
+                            self._p = None
+
         finally:
             self.__del__()
 
@@ -173,6 +193,10 @@ class VidLooper(object):
 
         # Kill any active video process
         self._kill_process()
+
+        # Kill any active splash screen
+        if self._splashproc:
+            os.killpg(os.getpgid(self._splashproc.pid), signal.SIGKILL)
 
 
 def main():
@@ -221,6 +245,9 @@ Raspberry Pi, which must be installed separately.
                              'terminal output.')
     parser.add_argument('--countdown', type=int, default=0,
                         help='Add a countdown before start (time in seconds)')
+    parser.add_argument('--splash', type=str, default=None,
+                        help='Splash screen image to show when no video is '
+                             'playing')
 
     # Invoke the videoplayer
     args = parser.parse_args()
