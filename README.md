@@ -21,6 +21,15 @@ and the video hasn't finished loading yet.
 
 ## Usage
 
+I've published a two part tutorial on my [blog](https://alexlubbock.com):
+
+* In [part 1](https://alexlubbock.com/raspberry-pi-video-player-hardware),
+I cover the hardware parts list and build instructions, including a
+3D-printed case
+* In [part 2](https://alexlubbock.com/raspberry-pi-video-player-software),
+I describe this `rpi-vidlooper` software tool and how to get it set up
+and configured
+
 On the hardware side, you'll need a Raspberry PI with several switches,
 one for each video. Each switch should be connected to a GPIO pin, and
 to ground. Optionally, you can set up an indicator LED for each video,
@@ -70,5 +79,7 @@ as above, this is not recommended.
 
 ## Further reading
 
+* [Raspberry Pi Video Player Hardware tutorial](https://alexlubbock.com/raspberry-pi-video-player-hardware)
+* [Raspberry Pi Video Player Software tutorial](https://alexlubbock.com/raspberry-pi-video-player-software)
 * [Python on the Raspberry Pi](https://www.raspberrypi.org/documentation/linux/software/python.md)
 * [OMXPlayer, a hardware-accelerated video player for Raspberry Pi](https://www.raspberrypi.org/documentation/raspbian/applications/omxplayer.md)
