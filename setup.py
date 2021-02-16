@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 import versioneer
 import os
 
@@ -15,7 +15,7 @@ def main():
         long_description_content_type='text/markdown',
         author='Alex Lubbock',
         author_email='code@alexlubbock.com',
-        packages=['rpi_vidlooper'],
+        packages=find_packages(),
         install_requires=['RPi.GPIO'],
         cmdclass=versioneer.get_cmdclass(),
         zip_safe=True,
