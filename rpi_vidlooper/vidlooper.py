@@ -124,6 +124,8 @@ class VidLooper(object):
                 cmd = ['omxplayer', '-b', '-o', self.audio]
                 if self.loop:
                     cmd += ['--loop']
+                if self.no_osd:
+                    cmd += ['--no-osd']
                 self._p = Popen(cmd + [filename],
                                 stdout=None if self.debug else PIPE,
                                 preexec_fn=os.setsid)
@@ -248,6 +250,8 @@ Raspberry Pi, which must be installed separately.
     parser.add_argument('--splash', type=str, default=None,
                         help='Splash screen image to show when no video is '
                              'playing')
+    parser.add_argument('--no-osd', action='store_true', default=False,
+                        help='Don\'t show on-screen display when changing videos')
 
     # Invoke the videoplayer
     args = parser.parse_args()
