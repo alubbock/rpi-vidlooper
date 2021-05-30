@@ -76,10 +76,16 @@ class VidLooper(object):
         # Assemble the list of videos to play, if needed
         if videos:
             self.videos = videos
+            for video in videos:
+                if not os.path.exists(video):
+                    raise FileNotFoundError('Video "{}" not found'.format(video))
         else:
             self.videos = [os.path.join(video_dir, f)
                            for f in sorted(os.listdir(video_dir))
                            if os.path.splitext(f)[1] in self._VIDEO_EXTS]
+            if not self.videos:
+                raise Exception('No videos found in "{}". Please specify a different '
+                                'directory or filename(s).'.format(video_dir))
 
         # Check that we have enough GPIO input pins for every video
         assert len(videos) <= len(self.gpio_pins), \
