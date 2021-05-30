@@ -67,7 +67,7 @@ class VidLooper(object):
 
     def __init__(self, audio='hdmi', autostart=True, restart_on_press=False,
                  video_dir=os.getcwd(), videos=None, gpio_pins=None, loop=True,
-                 splash=None, debug=False):
+                 no_osd=False, splash=None, debug=False):
         # Use default GPIO pins, if needed
         if gpio_pins is None:
             gpio_pins = self._GPIO_PIN_DEFAULT.copy()
@@ -99,6 +99,7 @@ class VidLooper(object):
         self.autostart = autostart
         self.restart_on_press = restart_on_press
         self.loop = loop
+        self.no_osd = no_osd
         self.splash = splash
         self._splashproc = None
 
