@@ -226,12 +226,12 @@ Raspberry Pi, which must be installed separately.
     parser.add_argument('--audio', default='hdmi',
                         choices=('hdmi', 'local', 'both'),
                         help='Output audio over HDMI, local (headphone jack),'
-                             'or both.')
+                             'or both')
     parser.add_argument('--no-autostart', action='store_false',
                         dest='autostart', default=True,
                         help='Don\'t start playing a video on startup')
     parser.add_argument('--no-loop', action='store_false', default=True,
-                        dest='loop', help='Loop the active video indefinitely.')
+                        dest='loop', help='Don\'t loop the active video')
     parser.add_argument(
         '--restart-on-press', action='store_true', default=False,
         help='If True, restart the current video if the button for the active '
@@ -251,14 +251,15 @@ Raspberry Pi, which must be installed separately.
                              'commas.')
     parser.add_argument('--debug', action='store_true', default=False,
                         help='Debug mode (don\'t clear screen or suppress '
-                             'terminal output.')
+                             'terminal output)')
     parser.add_argument('--countdown', type=int, default=0,
                         help='Add a countdown before start (time in seconds)')
     parser.add_argument('--splash', type=str, default=None,
                         help='Splash screen image to show when no video is '
                              'playing')
     parser.add_argument('--no-osd', action='store_true', default=False,
-                        help='Don\'t show on-screen display when changing videos')
+                        help='Don\'t show on-screen display when changing '
+                             'videos')
 
     # Invoke the videoplayer
     args = parser.parse_args()
