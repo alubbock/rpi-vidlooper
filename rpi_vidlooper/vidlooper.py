@@ -67,11 +67,14 @@ class VidLooper(object):
 
     def __init__(self, audio='hdmi', autostart=True, restart_on_press=False,
                  video_dir=os.getcwd(), videos=None, gpio_pins=None, loop=True,
-                 no_osd=False, splash=None, debug=False):
+                 no_osd=False, shutdown_pin=None, splash=None, debug=False):
         # Use default GPIO pins, if needed
         if gpio_pins is None:
             gpio_pins = self._GPIO_PIN_DEFAULT.copy()
         self.gpio_pins = gpio_pins
+
+        # Add shutdown pin
+        self.shutdown_pin = shutdown_pin
 
         # Assemble the list of videos to play, if needed
         if videos:
@@ -158,6 +161,14 @@ class VidLooper(object):
                 GPIO.setup(out_pin, GPIO.OUT)
                 GPIO.output(out_pin, GPIO.LOW)
 
+        # Set up the shutdown pin
+        if self.shutdown_pin:
+            GPIO.setup(self.shutdown_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+            GPIO.add_event_detect(self.shutdown_pin,
+                                  GPIO.FALLING,
+                                  callback=lambda: call(['shutdown', '-h', 'now'], shell=False),
+                                  bouncetime=self._GPIO_BOUNCE_TIME)
+
         if self.autostart:
             if self.splash is not None:
                 self._splashproc = Popen(['fbi', '--noverbose', '-a',
@@ -216,11 +227,11 @@ def main():
 This program is designed to power a looping video display, where the active
 video can be changed by pressing a button (i.e. by shorting a GPIO pin).
 The active video can optionally be indicated by an LED (one output for each
-input pin; works well with switches with built-in LEDs, but separate LEDs work 
+input pin; works well with switches with built-in LEDs, but separate LEDs work
 too).
 
 This video player uses omxplayer, a hardware-accelerated video player for the
-Raspberry Pi, which must be installed separately.        
+Raspberry Pi, which must be installed separately.
 """
     )
     parser.add_argument('--audio', default='hdmi',
@@ -260,6 +271,8 @@ Raspberry Pi, which must be installed separately.
     parser.add_argument('--no-osd', action='store_true', default=False,
                         help='Don\'t show on-screen display when changing '
                              'videos')
+    parser.add_argument('--shutdown-pin', type=int, default=None,
+                        help='GPIO pin to trigger system shutdown (default None)')
 
     # Invoke the videoplayer
     args = parser.parse_args()
