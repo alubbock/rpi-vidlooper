@@ -166,7 +166,7 @@ class VidLooper(object):
             GPIO.setup(self.shutdown_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
             GPIO.add_event_detect(self.shutdown_pin,
                                   GPIO.FALLING,
-                                  callback=lambda: call(['shutdown', '-h', 'now'], shell=False),
+                                  callback=lambda _: call(['shutdown', '-h', 'now'], shell=False),
                                   bouncetime=self._GPIO_BOUNCE_TIME)
 
         if self.autostart:
